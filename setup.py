@@ -7,7 +7,7 @@ from setuptools import find_packages
 setup(
     name='rpmvenv-centos',
     version='0.1.0',
-    url='',
+    url='https://sorceress.tamu.edu/stash/projects/JCI/repos/rpmvenv-centos/browse',
     description='CentOS extensions for RPM packager for Python virtualenv.',
     author="Jason Zylks",
     author_email="jzylks@tamu.edu",
