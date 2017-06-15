@@ -1,17 +1,14 @@
-==============
 rpmvenv-centos
 ==============
 
 *CentOS extensions for RPM package helper which support packaging Python virtual environments.*
 
 Basic Usage
-===========
+-----------
 
 In order to package a Python project in an RPM containing a virtualenv drop
 a file in your repository root with a '.json' extensions and the following
 content. Change the values where appropriate.
-
-.. code-block:: javascript
 
     {
         "extensions": {
