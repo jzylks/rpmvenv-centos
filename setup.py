@@ -16,7 +16,7 @@ setup(
     install_requires=['rpmvenv'],
     entry_points={
         'rpmvenv.extensions': [
-            'python_centos_venv = rpmvenv_centos.extensions.centos_venv:Extension',
+            'python_centos_venv = rpmvenv_centos.extensions.python.centos_venv:Extension',
         ]
     },
 )
