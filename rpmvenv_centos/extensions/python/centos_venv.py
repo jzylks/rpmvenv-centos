@@ -71,20 +71,20 @@ class Extension(interface.Extension):
     def generate(config, spec):
         """Generate Python virtualenv content."""
         spec.macros['venv_cmd'] = '{0} {1}'.format(
-            config.python_venv.cmd,
+            config.python_centos_venv.cmd,
             ' '.join(
-                config.python_venv.flags if config.python_venv.flags else ()
+                config.python_centos_venv.flags if config.python_centos_venv.flags else ()
             ),
         )
-        if config.python_venv.python:
+        if config.python_centos_venv.python:
 
             spec.macros['venv_cmd'] = '{0} --python={1}'.format(
                 spec.macros['venv_cmd'],
-                config.python_venv.python,
+                config.python_centos_venv.python,
             )
-        spec.macros['venv_name'] = config.python_venv.name
+        spec.macros['venv_name'] = config.python_centos_venv.name
         spec.macros['venv_install_dir'] = '{0}/%{{venv_name}}'.format(
-            config.python_venv.path,
+            config.python_centos_venv.path,
         )
         spec.macros['venv_dir'] = '%{buildroot}/%{venv_install_dir}'
         spec.macros['venv_bin'] = '%{venv_dir}/bin'
@@ -92,8 +92,8 @@ class Extension(interface.Extension):
         spec.macros['venv_pip'] = (
             '%{{venv_python}} %{{venv_bin}}/pip install {0}'.format(
                 ' '.join(
-                    config.python_venv.pip_flags
-                    if config.python_venv.pip_flags
+                    config.python_centos_venv.pip_flags
+                    if config.python_centos_venv.pip_flags
                     else ()
                 ),
             )
@@ -118,7 +118,7 @@ class Extension(interface.Extension):
         spec.blocks.install.append('%{venv_cmd} %{venv_dir}')
         spec.blocks.install.append('cd %{SOURCE0}')
  
-        for requirement in config.python_venv.requirements:
+        for requirement in config.python_centos_venv.requirements:
 
             spec.blocks.install.append(
                 '%{{venv_pip}} -r %{{SOURCE0}}/{0}'.format(
@@ -141,7 +141,7 @@ class Extension(interface.Extension):
             ' --destination=/%{venv_install_dir}',
         ))
 
-        if config.python_venv.strip_binaries:
+        if config.python_centos_venv.strip_binaries:
             spec.blocks.install.extend((
                 '# Strip native modules as they contain buildroot paths in'
                 'their debug information',
