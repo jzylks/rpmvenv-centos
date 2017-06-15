@@ -15,7 +15,7 @@ from rpmvenv.extensions import interface
 
 
 cfg = Configuration(
-    python_venv=Namespace(
+    python_centos_venv=Namespace(
         description='Generate RPMs from Python virtualenv.',
         cmd=StringOption(
             description='The executable to use for creating a venv.',
@@ -62,7 +62,7 @@ class Extension(interface.Extension):
 
     """Extension for packaging a Python virtualenv."""
 
-    name = 'python_venv'
+    name = 'python_centos_venv'
     description = 'Packaging extension for generating virtualenv.'
     version = '1.0.0'
     requirements = {}
