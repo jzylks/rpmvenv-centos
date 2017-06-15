@@ -24,7 +24,7 @@ cfg = Configuration(
         flags=ListOption(
             description='Flags to pass to the venv during creation.',
             option=StringOption(),
-            default=('--always-copy',),
+            default=(),
         ),
         name=StringOption(
             description='The name of the installed venv.',
@@ -147,11 +147,10 @@ class Extension(interface.Extension):
                 'their debug information',
                 'find %{venv_dir}/lib -type f -name "*.so" | xargs -r strip',
             ))
-        if '--always-copy' not in config.python_venv.flags:
-            spec.blocks.install.extend((
-                '# Remove symlink directories (lib64 -> lib)',
-                'for link in `find %{venv_dir} -type l` ; do source=`readlink -f $link` ; unlink $link ; cp -r $source $link ; done'
-            ))
+        spec.blocks.install.extend((
+            '# Remove symlink directories (lib64 -> lib)',
+            'for link in `find %{venv_dir} -type l` ; do source=`readlink -f $link` ; unlink $link ; cp -r $source $link ; done'
+        ))
 
         return spec
 
