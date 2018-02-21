@@ -122,6 +122,8 @@ class Extension(interface.Extension):
 
         spec.blocks.files.append('/%{venv_install_dir}')
 
+        if config.python_centos_venv.source_venv:
+            spec.blocks.install.append('mkdir -p `dirname %{venv_dir}`')
         spec.blocks.install.append('%{venv_cmd} %{venv_dir}')
         spec.blocks.install.append('cd %{SOURCE0}')
  
