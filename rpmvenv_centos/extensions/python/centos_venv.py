@@ -17,6 +17,10 @@ from rpmvenv.extensions import interface
 cfg = Configuration(
     python_centos_venv=Namespace(
         description='Generate RPMs from Python virtualenv.',
+        source_venv=StringOption(
+            description='Optional path for source virtualenv',
+            required=False,
+        ),
         cmd=StringOption(
             description='The executable to use for creating a venv.',
             default='virtualenv',
@@ -70,18 +74,21 @@ class Extension(interface.Extension):
     @staticmethod
     def generate(config, spec):
         """Generate Python virtualenv content."""
-        spec.macros['venv_cmd'] = '{0} {1}'.format(
-            config.python_centos_venv.cmd,
-            ' '.join(
-                config.python_centos_venv.flags if config.python_centos_venv.flags else ()
-            ),
-        )
-        if config.python_centos_venv.python:
-
-            spec.macros['venv_cmd'] = '{0} --python={1}'.format(
-                spec.macros['venv_cmd'],
-                config.python_centos_venv.python,
+        if config.python_centos_venv.source_venv:
+            spec.macros['venv_cmd'] = 'cp -r {0}'.format(config.python_centos_venv.source_venv)
+        else:
+            spec.macros['venv_cmd'] = '{0} {1}'.format(
+                config.python_centos_venv.cmd,
+                ' '.join(
+                    config.python_centos_venv.flags if config.python_centos_venv.flags else ()
+                ),
             )
+            if config.python_centos_venv.python:
+
+                spec.macros['venv_cmd'] = '{0} --python={1}'.format(
+                    spec.macros['venv_cmd'],
+                    config.python_centos_venv.python,
+                )
         spec.macros['venv_name'] = config.python_centos_venv.name
         spec.macros['venv_install_dir'] = '{0}/%{{venv_name}}'.format(
             config.python_centos_venv.path,
