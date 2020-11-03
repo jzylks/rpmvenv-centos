@@ -115,10 +115,9 @@ class Extension(interface.Extension):
 
         spec.tags['AutoReq'] = 'No'
         spec.tags['AutoProv'] = 'No'
+        spec.tags['BuildRequires'] = '/usr/bin/pathfix.py'
 
-        spec.blocks.prep.append(
-            'mkdir -p %{buildroot}/%{venv_install_dir}',
-        )
+        spec.blocks.prep.append('mkdir -p %{buildroot}/%{venv_install_dir}')
 
         spec.blocks.files.append('/%{venv_install_dir}')
 
@@ -158,7 +157,8 @@ class Extension(interface.Extension):
             ))
         spec.blocks.install.extend((
             '# Remove symlink directories (lib64 -> lib)',
-            'for link in `find %{venv_dir} -type l` ; do source=`readlink -f $link` ; unlink $link ; cp -r $source $link ; done'
+            'for link in `find %{venv_dir} -type l` ; do source=`readlink -f $link` ; unlink $link ; cp -r $source $link ; done',
+            'pathfix.py -pni "%{__python3} %{py3_shbang_opts}" %{buildroot}%{python3_sitearch} %{buildroot}%{_bindir}/*',
         ))
 
         return spec
