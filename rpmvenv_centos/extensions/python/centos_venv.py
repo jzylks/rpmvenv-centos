@@ -158,7 +158,7 @@ class Extension(interface.Extension):
         spec.blocks.install.extend((
             '# Remove symlink directories (lib64 -> lib)',
             'for link in `find %{venv_dir} -type l` ; do source=`readlink -f $link` ; unlink $link ; cp -r $source $link ; done',
-            r'pathfix.py -pni "%{__python3} %{py3_shbang_opts}" %{buildroot}/%{venv_install_dir} `grep -lr "^#!/usr/bin/env python$" . | grep "\.py" | egrep "\-[^/]+$"`',
+            r'pathfix.py -pni "%{__python3} %{py3_shbang_opts}" %{buildroot}/%{venv_install_dir} `grep -lr "^#!/usr/bin/env python$" ${PWD} | grep "\.py" | egrep "\-[^/]+$"`',
         ))
 
         return spec
