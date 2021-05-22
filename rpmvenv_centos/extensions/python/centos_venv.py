@@ -145,7 +145,7 @@ class Extension(interface.Extension):
             'find %{buildroot} -name "RECORD" -exec rm -rf {} \\;',
             '# Change the virtualenv path to the target installation '
             'direcotry.',
-            'venvctrl-relocate --source=%{venv_dir}'
+            '# venvctrl-relocate --source=%{venv_dir}'
             ' --destination=/%{venv_install_dir}',
         ))
 
