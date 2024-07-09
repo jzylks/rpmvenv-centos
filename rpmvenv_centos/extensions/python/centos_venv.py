@@ -74,6 +74,7 @@ class Extension(interface.Extension):
     @staticmethod
     def generate(config, spec):
         """Generate Python virtualenv content."""
+        spec.macros['_build_id_links'] = 'none'
         if config.python_centos_venv.source_venv:
             spec.macros['venv_cmd'] = 'cp -r {0}'.format(config.python_centos_venv.source_venv)
         else:
